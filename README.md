@@ -1,50 +1,38 @@
-# Welcome to your Expo app 👋
+# JConcierge: Luxury Mobile Service Portal
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+JConcierge is a premium mobile application built with **Expo** and **React Native**. It provides an intuitive, high-end interface for managing elite concierge services across Aviation, Yachting, Gastronomy, and more.
 
-## Get started
+## Key Features
 
-1. Install dependencies
+- **Dynamic Service Catalog:** Interactive grid-based navigation to dedicated service detail pages.
+- **Deep Linking & Routing:** Robust file-based routing using **Expo Router**, supporting dynamic segments like `service/[id]`.
+- **Premium UI Components:** Custom-built components using **Lucide Icons** and **Reanimated** for a fluid, high-performance user experience.
+- **Service Request Flow:** Integrated call-to-action buttons for requesting bespoke services globally.
 
+## Tech Stack
+
+- **Framework:** Expo (React Native)
+- **Navigation:** Expo Router (File-based)
+- **Styling:** React Native StyleSheet (Dark Mode / Minimalist)
+- **Icons:** Lucide React Native
+- **Language:** TypeScript
+
+## Application Structure
+
+- `app/(tabs)/index.tsx`: The main "Command Center" dashboard.
+- `app/service/[id].tsx`: Dynamic service detail pages with bespoke content for each category.
+- `app/messages.tsx`: Real-time concierge desk communication (Demo).
+
+## Getting Started
+
+1. **Install dependencies:**
    ```bash
    npm install
    ```
-
-2. Start the app
-
+2. **Launch the project:**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+*Developed by Nicholas Bilotto*

@@ -1,98 +1,100 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  Anchor,
+  CarFront,
+  Diamond,
+  Key,
+  Leaf,
+  MessageSquare,
+  Plane,
+  Ticket,
+  Utensils
+} from 'lucide-react-native';
+import React from 'react';
+import {
+  Dimensions,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { Link, useRouter } from 'expo-router';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const { width } = Dimensions.get('window');
+const GRID_ITEM_WIDTH = (width - 48 - 16) / 2;
 
-export default function HomeScreen() {
+const CATEGORIES = [
+  { id: 'aviation', title: 'Aviation', subtitle: 'Private Jets & Charters', icon: <Plane color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'yachting', title: 'Yachting', subtitle: 'Charters & Brokerage', icon: <Anchor color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'chauffeur', title: 'Chauffeur', subtitle: 'Secure Ground Travel', icon: <CarFront color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'estates', title: 'Estates', subtitle: 'Off-Market Properties', icon: <Key color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'gastronomy', title: 'Gastronomy', subtitle: 'Priority Reservations', icon: <Utensils color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'access', title: 'Access', subtitle: 'VIP & Sold-Out Events', icon: <Ticket color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'procurement', title: 'Procurement', subtitle: 'Fine Goods & Rarities', icon: <Diamond color="#FFFFFF" size={32} strokeWidth={1} /> },
+  { id: 'wellness', title: 'Wellness', subtitle: 'Medical & Retreats', icon: <Leaf color="#FFFFFF" size={32} strokeWidth={1} /> }
+];
+
+export default function Home() {
+  const router = useRouter();
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <View style={styles.header}>
+          <Text style={styles.greeting}>Command Center</Text>
+          <Text style={styles.name}>Welcome, Sir.</Text>
+        </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View style={styles.quickActionsWrapper}>
+             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.quickActionsContainer}>
+            <TouchableOpacity style={styles.quickActionPill} onPress={() => router.push('/messages')}>
+                <MessageSquare color="#FFFFFF" size={14} strokeWidth={1.5} />
+                <Text style={styles.quickActionText}>Concierge Desk</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.quickActionPill}>
+                <Plane color="#FFFFFF" size={14} strokeWidth={1.5} />
+                <Text style={styles.quickActionText}>Active Itinerary</Text>
+            </TouchableOpacity>
+            </ScrollView>
+        </View>
+
+        <View style={styles.gridContainer}>
+          {CATEGORIES.map((category) => (
+            <Link key={category.id} href={`/service/${category.id}`} asChild>
+              <TouchableOpacity activeOpacity={0.7} style={styles.gridItem}>
+                  <View style={styles.gridIconWrapper}>
+                      {category.icon}
+                  </View>
+                  <Text style={styles.gridTitle}>{category.title}</Text>
+                  <Text style={styles.gridSubtitle}>{category.subtitle}</Text>
+              </TouchableOpacity>
+            </Link>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  container: { flex: 1, backgroundColor: '#000000' },
+  scrollContent: { paddingBottom: 40 },
+  header: { paddingHorizontal: 24, paddingTop: 80, paddingBottom: 24 },
+  greeting: { color: '#666666', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase', fontWeight: '600', marginBottom: 8 },
+  name: { color: '#FFFFFF', fontSize: 32, fontWeight: '300', letterSpacing: 0.5 },
+  quickActionsWrapper: { marginBottom: 32 },
+  quickActionsContainer: { paddingHorizontal: 24, gap: 10 },
+  quickActionPill: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#0A0A0A', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 50, borderWidth: 1, borderColor: '#1F1F1F' },
+  quickActionText: { color: '#FFFFFF', fontSize: 13, fontWeight: '500', marginLeft: 10, letterSpacing: 0.5 },
+  gridContainer: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 24, justifyContent: 'space-between', gap: 16 },
+  gridItem: { width: GRID_ITEM_WIDTH, aspectRatio: 1, backgroundColor: '#0A0A0A', borderRadius: 20, padding: 20, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#1A1A1A' },
+  gridIconWrapper: { marginBottom: 20 },
+  gridTitle: { color: '#FFFFFF', fontSize: 16, fontWeight: '400', letterSpacing: 0.8, marginBottom: 6, textAlign: 'center' },
+  gridSubtitle: { color: '#666666', fontSize: 11, fontWeight: '400', letterSpacing: 0.4, textAlign: 'center', textTransform: 'uppercase' }
 });
